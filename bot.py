@@ -7,6 +7,7 @@ token = "token"
 client = discord.Client()
 status = cycle(["l|갓포티파이","w|갓튜브","갓겜"])
 cmds = ["코로나현황","코로나대처법","선별진료소","핑","태보해","최근공지","최근재난문자","설정","도움말","도움","마스크","캡챠","관리자"]
+naver = {"X-Naver-Client-Id":"클라이언트 ID","X-Naver-Client-Secret":""}
 
 cooldown = {}
 captcha = []
@@ -143,6 +144,7 @@ async def on_message(message):
     global status
     global lastAnnounce
     global cooldown
+    global naver
     logCh = client.get_user(278441794633465876)
 
     if message.author.bot or str(message.author.id) in captcha: return
@@ -343,7 +345,6 @@ async def on_message(message):
             await message.channel.send(content=":no_entry: 이미 인증이 되어있습니다.")
             return
 
-        naver = {"X-Naver-Client-Id":"FJSzckugo6bZMGgQ7V3X","X-Naver-Client-Secret":"Fb7IjVDGWu"}
         try:
             req = requests.get("https://openapi.naver.com/v1/captcha/nkey?code=0",headers=naver)
             if req.status_code != 200: await catchError(message, "상태 코드 오류")
